@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace DotNetNinja.Identity
+namespace DotNetNinja.Identity.TestApi
 {
     public class Program
     {

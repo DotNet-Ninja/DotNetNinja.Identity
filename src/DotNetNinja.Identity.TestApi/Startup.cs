@@ -1,4 +1,3 @@
-using ChaosMonkey.Guards;
 using DotNetNinja.AutoBoundConfiguration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,27 +5,32 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace DotNetNinja.Identity
+namespace DotNetNinja.Identity.TestApi
 {
     public class Startup
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = Guard.IsNotNull(configuration, nameof(configuration));
+            Configuration = configuration;
         }
 
-        protected IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services
+            var settings = services
                 .AddAutoBoundConfigurations(Configuration)
-                .FromAssembly(typeof(Program).Assembly).Services
-                .AddControllersWithViews().Services
-                .AddIdentityServer()
-                .AddInMemoryApiResources(InMemory.ApiResources)
-                .AddInMemoryClients(InMemory.Clients)
-                .AddDeveloperSigningCredential();
+                .FromAssembly(typeof(Program).Assembly).Provider;
+
+            services
+                .AddControllers().Services
+                .AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = "https://localhost:5001";
+                    options.RequireHttpsMetadata = true;
+                    options.Audience = "test-api";
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -37,13 +41,13 @@ namespace DotNetNinja.Identity
             }
 
             app
-                .UseStaticFiles()
+                .UseHttpsRedirection()
                 .UseRouting()
-                .UseIdentityServer()
+                .UseAuthentication()
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {
-                    endpoints.MapDefaultControllerRoute();
+                    endpoints.MapControllers();
                 });
         }
     }
