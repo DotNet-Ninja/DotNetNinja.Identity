@@ -1,4 +1,5 @@
 using DotNetNinja.AutoBoundConfiguration;
+using DotNetNinja.Identity.TestApi.Configuration.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,9 +28,10 @@ namespace DotNetNinja.Identity.TestApi
                 .AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "https://localhost:5001";
-                    options.RequireHttpsMetadata = true;
-                    options.Audience = "test-api";
+                    var auth = settings.Get<AuthSettings>();
+                    options.Audience = auth.Audience;
+                    options.RequireHttpsMetadata = auth.RequireHttpsMetadata;
+                    options.Authority = auth.Authority;
                 });
         }
 

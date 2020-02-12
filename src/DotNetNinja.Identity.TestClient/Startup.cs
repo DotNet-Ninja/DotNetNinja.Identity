@@ -1,4 +1,6 @@
+using System.IdentityModel.Tokens.Jwt;
 using DotNetNinja.AutoBoundConfiguration;
+using DotNetNinja.Identity.TestClient.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -16,16 +18,42 @@ namespace DotNetNinja.Identity.TestClient
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services
+            var settings = services
                 .AddAutoBoundConfigurations(Configuration)
-                .FromAssembly(typeof(Program).Assembly).Services
+                .FromAssembly(typeof(Program).Assembly)
+                .Provider;
+
+            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultScheme = "Cookies";
+                    options.DefaultChallengeScheme = "oidc";
+                })
+                .AddCookie("Cookies")
+                .AddOpenIdConnect("oidc", options =>
+                {
+                    var configuration = settings.Get<OidcConfiguration>();
+                    options.Authority = configuration.Authority;
+                    options.RequireHttpsMetadata = false;
+                    options.ClientId = configuration.ClientId;
+                    options.ClientSecret = configuration.ClientSecret;
+                    options.ResponseType = configuration.ResponseType;
+
+                    options.SaveTokens = true;
+                    
+                    configuration.Scopes.ForEach(scope =>
+                    {
+                        options.Scope.Add(scope);
+                    });
+
+                }).Services
                 .AddControllersWithViews();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -34,23 +62,23 @@ namespace DotNetNinja.Identity.TestClient
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app
+                    .UseExceptionHandler("/Home/Error")
+                    .UseHsts();// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                
             }
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app
+                .UseHttpsRedirection()
+                .UseStaticFiles()
+                .UseRouting()
+                .UseAuthentication()
+                .UseAuthorization()
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Home}/{action=Index}/{id?}");
+                });
         }
     }
 }

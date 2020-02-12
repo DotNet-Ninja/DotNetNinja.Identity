@@ -26,6 +26,8 @@ namespace DotNetNinja.Identity
                 .AddIdentityServer()
                 .AddInMemoryApiResources(InMemory.ApiResources)
                 .AddInMemoryClients(InMemory.Clients)
+                .AddInMemoryIdentityResources(InMemory.IdentityResources)
+                .AddTestUsers(InMemory.TestUsers)
                 .AddDeveloperSigningCredential();
         }
 
