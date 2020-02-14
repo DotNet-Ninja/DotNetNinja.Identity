@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>899d4609-3f36-4633-933a-64c01660bdc8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,6 +11,10 @@
     <PackageReference Include="IdentityServer4" Version="3.1.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Configuration\Settings\" />
   </ItemGroup>
 
 </Project>
