@@ -1,15 +1,31 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EC52B731-7F7D-41CE-8148-D7052E86E786}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetNinja.Identity", "src\DotNetNinja.Identity\DotNetNinja.Identity.csproj", "{3CD71080-1E65-4866-9032-DD05FDA586F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetNinja.Identity", "src\DotNetNinja.Identity\DotNetNinja.Identity.csproj", "{3CD71080-1E65-4866-9032-DD05FDA586F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetNinja.Identity.TestApi", "src\DotNetNinja.Identity.TestApi\DotNetNinja.Identity.TestApi.csproj", "{9DE60F59-0D9E-4A43-9D2A-4176E6A5E1A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetNinja.Identity.TestApi", "src\DotNetNinja.Identity.TestApi\DotNetNinja.Identity.TestApi.csproj", "{9DE60F59-0D9E-4A43-9D2A-4176E6A5E1A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetNinja.Identity.TestClient", "src\DotNetNinja.Identity.TestClient\DotNetNinja.Identity.TestClient.csproj", "{348DFCC2-E049-4C86-A748-5C0BF1025698}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetNinja.Identity.TestClient", "src\DotNetNinja.Identity.TestClient\DotNetNinja.Identity.TestClient.csproj", "{348DFCC2-E049-4C86-A748-5C0BF1025698}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{287E9E3F-4491-4550-AE5A-2C92EACFBB97}"
+	ProjectSection(SolutionItems) = preProject
+		tools\GenerateCertificate.ps1 = tools\GenerateCertificate.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{BEDA2CD1-BCFE-4588-B0DE-C9D46508B377}"
+	ProjectSection(SolutionItems) = preProject
+		License.txt = License.txt
+		ReadMe.md = ReadMe.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "devops", "devops", "{806F7CAB-F5B3-425A-8B62-AEE4FEC0B611}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,9 +35,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3CD71080-1E65-4866-9032-DD05FDA586F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -61,9 +74,15 @@ Global
 		{348DFCC2-E049-4C86-A748-5C0BF1025698}.Release|x86.ActiveCfg = Release|Any CPU
 		{348DFCC2-E049-4C86-A748-5C0BF1025698}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3CD71080-1E65-4866-9032-DD05FDA586F8} = {EC52B731-7F7D-41CE-8148-D7052E86E786}
 		{9DE60F59-0D9E-4A43-9D2A-4176E6A5E1A5} = {EC52B731-7F7D-41CE-8148-D7052E86E786}
 		{348DFCC2-E049-4C86-A748-5C0BF1025698} = {EC52B731-7F7D-41CE-8148-D7052E86E786}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2C9F88F0-6EAB-4B4B-A179-E877D2FB4459}
 	EndGlobalSection
 EndGlobal

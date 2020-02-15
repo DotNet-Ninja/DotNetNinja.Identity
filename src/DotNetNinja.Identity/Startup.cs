@@ -1,12 +1,14 @@
 using System.Security.Cryptography.X509Certificates;
 using ChaosMonkey.Guards;
 using DotNetNinja.AutoBoundConfiguration;
+using DotNetNinja.Identity.Configuration;
 using DotNetNinja.Identity.Configuration.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 
 namespace DotNetNinja.Identity
 {
@@ -24,15 +26,14 @@ namespace DotNetNinja.Identity
             var settings = services
                 .AddAutoBoundConfigurations(Configuration)
                 .FromAssembly(typeof(Program).Assembly).Provider;
+
             var certificateSettings = settings.Get<CertificateSettings>();
             var signingCertificate = new X509Certificate2(certificateSettings.Path, certificateSettings.Password);
 
             services
                 .AddControllersWithViews().Services
                 .AddIdentityServer()
-                .AddInMemoryApiResources(InMemory.ApiResources)
-                .AddInMemoryClients(InMemory.Clients)
-                .AddInMemoryIdentityResources(InMemory.IdentityResources)
+                .AddSqlServerDataStores(settings.Get<ConnectionSettings>())
                 .AddTestUsers(InMemory.TestUsers)
                 //.AddDeveloperSigningCredential() // Uncomment this line and comment out the one below if you wish to run locally without
                 .AddSigningCredential(signingCertificate);  // generating a certificate.  DO NOT RUN THIS WAY IN PRODUCTION!
@@ -50,10 +51,7 @@ namespace DotNetNinja.Identity
                 .UseRouting()
                 .UseIdentityServer()
                 .UseAuthorization()
-                .UseEndpoints(endpoints =>
-                {
-                    endpoints.MapDefaultControllerRoute();
-                });
+                .UseDefaultEndpoints();
         }
     }
 }
