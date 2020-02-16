@@ -1,5 +1,5 @@
 ﻿body {
-    margin-top: 65px;
+    margin-top: 85px;
 }
 
 .navbar-header {
@@ -7,10 +7,21 @@
     top: -4px;
 }
 
+.navbar {
+    border-bottom: solid 3px #0066ff;
+}
+
 .navbar-brand > .icon-banner {
     position: relative;
     top: -2px;
     display: inline;
+}
+
+.navbar-brand{
+    padding-left: 40px;
+    background-image: url("../images/Icon.White.32.png");
+    background-position: left center;
+    background-repeat: no-repeat;
 }
 
 .icon {

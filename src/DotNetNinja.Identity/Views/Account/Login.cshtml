@@ -1,23 +1,17 @@
 @model LoginViewModel
 
-<div class="login-page">
-    <div class="page-header">
-        <h1>Login</h1>
-    </div>
+    <div class="login-page">
 
-    <partial name="_ValidationSummary" />
-
-    <div class="row">
 
         @if (Model.EnableLocalLogin)
         {
-            <div class="col-sm-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Local Login</h3>
+        <div class="row">
+            <div class="offset-md-3 col-md-6 col-sm-12 ">
+                <div class="card md-3">
+                    <div class="card-header bg-dark text-light">
+                        <h3>Sign In</h3>
                     </div>
-                    <div class="panel-body">
-
+                    <div class="card-body">
                         <form asp-route="Login">
                             <input type="hidden" asp-for="ReturnUrl" />
 
@@ -35,24 +29,27 @@
                                     <div class="form-group login-remember">
                                         <label asp-for="RememberLogin">
                                             <input asp-for="RememberLogin">
-                                            <strong>Remember My Login</strong>
+                                            <strong>Remember Me</strong>
                                         </label>
                                     </div>
                                 }
+                                <partial name="_ValidationSummary" />
                                 <div class="form-group">
-                                    <button class="btn btn-primary" name="button" value="login">Login</button>
-                                    <button class="btn btn-default" name="button" value="cancel">Cancel</button>
+                                    <button class="btn btn-primary" name="button" value="login">Sign In</button>
+                                    <button class="btn btn-secondary" name="button" value="cancel">Cancel</button>
                                 </div>
                             </fieldset>
                         </form>
                     </div>
                 </div>
             </div>
+        </div>
         }
 
         @if (Model.VisibleExternalProviders.Any())
         {
-            <div class="col-md-6 col-sm-6 external-providers">
+        <div class="row">
+            <div class="offset-md-3 col-md-6 col-sm-12 external-providers">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">External Login</h3>
@@ -75,6 +72,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         }
 
         @if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
@@ -85,4 +83,3 @@
             </div>
         }
     </div>
-</div>
