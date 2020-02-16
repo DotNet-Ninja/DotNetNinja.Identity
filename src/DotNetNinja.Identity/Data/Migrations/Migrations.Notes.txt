@@ -1,3 +1,5 @@
 ﻿Add-Migration InitialPersistedGrantDbMigration -Context PersistedGrantDbContext -o Data/Migrations/IdentityServer/PersistedGrantDb
 
 Add-Migration InitialConfigurationDbMigration -Context ConfigurationDbContext -o Data/Migrations/IdentityServer/ConfigurationDb
+
+Add-Migration InitialUserDbMigration -Context UserDbContext -o Data/Migrations/IdentityModel/UserDb

@@ -1,4 +1,6 @@
 ﻿using DotNetNinja.Identity.Configuration.Settings;
+using DotNetNinja.Identity.Data;
+using DotNetNinja.Identity.Data.Migrations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,14 +31,26 @@ namespace DotNetNinja.Identity.Configuration
 
         private static IIdentityServerBuilder  AddSqlUserStore(this IIdentityServerBuilder  services, ConnectionSettings settings)
         {
-            return services;
+            var defaultServices = services;
+            services.Services.AddDbContext<UserDbContext>(options => 
+            { 
+                options.UseSqlServer(settings.UserDb, builder =>
+                {
+                    builder.MigrationsAssembly(typeof(UserDbContext).Assembly.GetName().Name);
+                });
+            });
+            return defaultServices;
         }
 
         public static IIdentityServerBuilder  AddSqlServerDataStores(this IIdentityServerBuilder  services, ConnectionSettings settings)
         {
-            return services.AddSqlOperationalStore(settings)
+            var defaultServices = services.Services;
+
+            services.AddSqlOperationalStore(settings)
                 .AddSqlConfigurationStore(settings)
                 .AddSqlUserStore(settings);
+            defaultServices.AddScoped<IDbMigrator, SqlDbMigrator>();
+            return services;
         }
     }
 }
