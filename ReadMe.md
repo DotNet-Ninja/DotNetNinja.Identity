@@ -22,7 +22,6 @@ secrets.json
     "SigningCertificate": {
       "Path": "C:\\Your\\Repository\\Path\\tools\\your.file.name.pfx",
       "Password": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-    }
   },
   "ConnectionStrings": {
       "PersistedGrantDb": "server=[SERVERNAME]; Database=DotNetNinjaIdentity; User Id=[USERNAME]; Password=[PASSWORD]; Application Name=IS4.PersistedGrant",
