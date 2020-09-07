@@ -39,7 +39,7 @@ namespace DotNetNinja.Identity
                 .AddSqlServerDataStores(settings.Get<ConnectionSettings>())
                 .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
                 //.AddDeveloperSigningCredential() // Uncomment this line and comment out the one below if you wish to run locally without
-                .AddSigningCredential(signingCertificate);  // generating a certificate.  DO NOT RUN THIS WAY IN PRODUCTION!
+                .AddSigningCredential(signingCertificate);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbMigrator migrations)
